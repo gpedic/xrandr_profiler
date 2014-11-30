@@ -98,19 +98,20 @@ class XrProfiler:
 
     #TODO: add error checking
     def load(self, force = False):
-        current_id = self._retrieve_current_setup_id()
-        current_setup = xr_helper.get_current_setup()
-        current_hash = self._create_setup_hash(current_setup)
-        profile = self._get_profile_by_id(current_id)
+        active = self._get_active_profile()
+        profile = self._get_profile_by_id(active['id'])
         if profile is None:
             return False
-        elif not force and profile['hash'] == current_hash:
+        elif not force and profile['hash'] == active['hash']:
             return True
         self._xr_helper.run_xrandr(self._compile_profile(profile))
         return True
 
     def list(self):
-        return []
+        return {
+            'profiles': self._profiles,
+            'active': self._get_active_profile()['hash']
+        }
 
     def create_profile(self, setup, name = ''):
         profile_id = self._create_profile_id(setup)
@@ -133,6 +134,10 @@ class XrProfiler:
         self.delete_profile(profile['id'])
         self._profiles.append(profile)
         return self._profiles
+
+    def _get_active_profile(self):
+        current_setup = xr_helper.get_current_setup()
+        return self.create_profile(current_setup)
 
     def _compile_profile(self, profile):
         formatting = (lambda x: "--" + x[0], lambda x: x[1])
@@ -193,7 +198,12 @@ if __name__ == "__main__":
     xr_profiler = XrProfiler(_PROFILES_PATH, xr_helper)
 
     if args.list:
-        print(xr_profiler.list())
+        out = xr_profiler.list()
+        for profile in out['profiles']:
+            if profile['hash'] == out['active']:
+                print(profile['name'] + ' (active)')
+            else:
+                print(profile['name'])
     elif args.save:
         xr_profiler.save(args.name)
     elif args.load:
