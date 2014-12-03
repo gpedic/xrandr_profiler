@@ -87,7 +87,7 @@ class XrProfiler:
         return self._profiles
 
     def save(self, name = None):
-        setup = xr_helper.get_current_setup()
+        setup = self._xr_helper.get_current_setup()
         if not name:
             name = "Profile for " + "\\".join(
                 [s[0][1] for s in setup if s[0][0] == 'output']
@@ -136,7 +136,7 @@ class XrProfiler:
         return self._profiles
 
     def _get_active_profile(self):
-        current_setup = xr_helper.get_current_setup()
+        current_setup = self._xr_helper.get_current_setup()
         return self.create_profile(current_setup)
 
     def _compile_profile(self, profile):
@@ -168,18 +168,21 @@ class XrProfiler:
 
     def _load_profiles(self):
         try:
-            stream = open(self._path, 'r')
-            self._profiles = yaml.load(stream)
-            stream.close()
+            with open(self._path, 'r') as f:
+                profiles = yaml.load(f)
+                if profiles:
+                    self._profiles = profiles
+                else:
+                    self._profiles = []
         except IOError:
             self._profiles = []
+        return self._profiles
 
     def _write_profiles(self):
         success = True
         try:
-            stream = open(self._path, "w")
-            yaml.dump(self._profiles, stream)
-            stream.close()
+            with open(self._path, "w") as f:
+                f.write(yaml.dump(self._profiles))
         except IOError:
             success = False
         return success
