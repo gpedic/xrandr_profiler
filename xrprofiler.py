@@ -113,7 +113,7 @@ class XrProfiler:
             'active': self._get_active_profile()['hash']
         }
 
-    def create_profile(self, setup, name = ''):
+    def create_profile(self, setup, name=''):
         profile_id = self._create_profile_id(setup)
         setup_hash = self._create_setup_hash(setup)
         profile = {

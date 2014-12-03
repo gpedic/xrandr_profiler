@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import MagicMock
 from unittest.mock import mock_open
 from unittest.mock import patch
-import xr_profile
+import xrprofiler
 
 xr_strings = ['Screen 0: minimum 8 x 8, current 3520 x 1080, maximum 8192 x 8192',
 'VGA-0 disconnected (normal left inverted right x axis y axis)',
@@ -73,8 +73,8 @@ class TestXrProfiler(unittest.TestCase):
         self.xrhelper = xrhelper
         self.mo = mock_open()
         #init xrprofiler without init data
-        with patch('xr_profile.open', mock_open(), create=True):
-            self.xrprofiler = xr_profile.XrProfiler('test.yaml', xrhelper)
+        with patch('xrprofiler.open', mock_open(), create=True):
+            self.xrprofiler = xrprofiler.XrProfiler('test.yaml', xrhelper)
 
     def testXrProfilerLoadNoProfile(self):
         #try to load a profile when no profiles exist
@@ -84,20 +84,20 @@ class TestXrProfiler(unittest.TestCase):
     def testXrProfileInitAndForceLoad(self):
         #init xrprofiler with profile data
         self.mo = mock_open(read_data=xr_output)
-        with patch('xr_profile.open', self.mo, create=True):
-            xrprofiler = xr_profile.XrProfiler('test.yaml', self.xrhelper)
+        with patch('xrprofiler.open', self.mo, create=True):
+            xrp = xrprofiler.XrProfiler('test.yaml', self.xrhelper)
         self.mo.assert_called_once_with('test.yaml', 'r')
 
         #already loaded profile without force option
-        self.assertTrue(xprofiler.load())
+        self.assertTrue(xrp.load())
         self.assertFalse(self.xrhelper.run_xrandr.called)
 
         #load already loaded profile with force option
-        self.assertTrue(xrprofiler.load(True))
+        self.assertTrue(xrp.load(True))
         self.assertTrue(self.xrhelper.run_xrandr.called)
 
     def testXrProfilerSave(self):
-        with patch('xr_profile.open', self.mo, create=True):
+        with patch('xrprofiler.open', self.mo, create=True):
             success = self.xrprofiler.save()
         self.assertTrue(success)
         self.mo.assert_called_once_with('test.yaml', 'w')
@@ -105,7 +105,7 @@ class TestXrProfiler(unittest.TestCase):
         handle.write.assert_called_with(xr_output)
 
     def testXrProfilerSaveWithName(self):
-        with patch('xr_profile.open', self.mo, create=True):
+        with patch('xrprofiler.open', self.mo, create=True):
             success = self.xrprofiler.save("Test")
         self.assertTrue(success)
         self.mo.assert_called_once_with('test.yaml', 'w')
