@@ -9,6 +9,11 @@ moment the profile is created.
 
 Use with **Python 3**.
 
+###Install
+Just create a symlink to xrprofiler.py in a location that is on your PATH. Example:
+
+`sudo ln -s /path/to/xrprofiler.py /usr/bin/xrprofiler`
+
 ###Automation
 If your graphics card driver supports sending out events when devices are hotplugged the 
 profile switching can be automated by definig an udev rule or by using srandrd.
@@ -32,9 +37,9 @@ https://bitbucket.org/portix/srandrd
 
 Run: `srandrd "/path/to/xrprofiler.py --load"`
 
-
-###Alternatives
-Create a keyboard or desktop shortcut and bind it to `"/path/to/xrprofiler.py --load"`
+###Manual loading
+If auto loading doesn't work or is not needed you could also just create a 
+keyboard or desktop shortcut and bind it to `"/path/to/xrprofiler.py --load"`
 
 ##Usage
 
