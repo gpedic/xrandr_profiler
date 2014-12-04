@@ -32,7 +32,7 @@ xr_settings = [
 ]
 
 xr_output = """- hash: 925a5404fb036278c1ca99621b4ca9da
-  id: JbF4k8ZCjef8tqMjctW42m
+  id: 9e844c1eadd0d9f9fa17f744d4dd1cdd
   name: Profile for DP-1\DP-3
   settings:
   - - [output, DP-1]
@@ -48,7 +48,7 @@ xr_output = """- hash: 925a5404fb036278c1ca99621b4ca9da
     - [reflect, normal]
 """
 xr_output_named = """- hash: 925a5404fb036278c1ca99621b4ca9da
-  id: JbF4k8ZCjef8tqMjctW42m
+  id: 9e844c1eadd0d9f9fa17f744d4dd1cdd
   name: Test
   settings:
   - - [output, DP-1]

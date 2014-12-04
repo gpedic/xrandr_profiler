@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import subprocess, yaml, shortuuid, hashlib, argparse, re
+import subprocess, yaml, hashlib, argparse, re
 
 _XRANDR_PATH = "/usr/bin/xrandr"
 _PROFILES_PATH = "profiles.yaml"
@@ -148,7 +148,7 @@ class XrProfiler:
 
     def _create_profile_id(self, setup):
         display_names = [s[0][1] for s in setup if s[0][0] == "output"]
-        return shortuuid.uuid(name="|".join(display_names))
+        return hashlib.md5("|".join(display_names).encode('ascii')).hexdigest()
 
     def _create_setup_hash(self, setup):
         h = hashlib.md5(yaml.dump(setup).encode('ascii'))
