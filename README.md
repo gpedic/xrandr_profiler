@@ -18,7 +18,7 @@ Just create a symlink to xrprofiler.py in a location that is on your PATH. Examp
 If your graphics card driver supports sending out events when devices are hotplugged the 
 profile switching can be automated by definig an udev rule or by using srandrd.
 
-####Udev (Ubuntu)
+####udev (Ubuntu)
 This method only works with open source drivers (radeon, nouveau, intel).
 
 Create a new rule file `/etc/udev/rules.d/10-xrprofiler.rules`
@@ -30,8 +30,6 @@ and add the rule:
 load the new rule using `sudo udevstart` or `sudo /etc/init.d/udev restart`
 
 ####srandrd
-I'm not sure if this method works with proprietary graphics drivers.
-
 Download srandrd from:
 https://bitbucket.org/portix/srandrd
 
