@@ -1,8 +1,10 @@
 #!/usr/bin/python3
-import subprocess, yaml, hashlib, argparse, re
 
+import subprocess, yaml, hashlib, argparse, re, os
+
+_DIR = os.path.dirname(os.path.realpath(__file__))
 _XRANDR_PATH = "/usr/bin/xrandr"
-_PROFILES_PATH = "profiles.yaml"
+_PROFILES_PATH = _DIR + "/profiles.yaml"
 
 class XrHelper:
     def __init__(self, xr_path):
