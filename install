@@ -1,0 +1,12 @@
+#!/bin/bash
+INSTALL_DIR=/usr/local/bin
+INSTALL_DIR_LOCAL=~/bin
+DIR=`pwd`
+if [[ $EUID -eq 0 ]]; then
+    cp -f "$DIR/xrprofiler.py" "$INSTALL_DIR/xrprofiler"
+    echo "Installed as $INSTALL_DIR/xrprofiler"
+else
+    cp -f "$DIR/xrprofiler.py" "$INSTALL_DIR_LOCAL/xrprofiler"
+    echo "Installed as $INSTALL_DIR_LOCAL/xrprofiler"
+fi
+

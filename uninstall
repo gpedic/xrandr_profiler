@@ -1,0 +1,22 @@
+#!/bin/bash
+INSTALL_DIR=/usr/local/bin
+INSTALL_DIR_LOCAL=~/bin
+SCRIPT_SYSTEM="$INSTALL_DIR/xrprofiler"
+SCRIPT_LOCAL="$INSTALL_DIR_LOCAL/xrprofiler"
+
+if [[ $EUID -eq 0 ]]; then
+    if [ \( -e "$SCRIPT_SYSTEM" \) ]; then
+        rm "$SCRIPT_SYSTEM"
+        echo "Removed $SCRIPT_SYSTEM"
+    else
+        echo "Nothing to remove"
+    fi
+else
+    if [ \( -e "$SCRIPT_LOCAL" \) ]; then
+        rm "$SCRIPT_LOCAL"
+        echo "Removed $SCRIPT_LOCAL"
+    else
+        echo "Nothing to remove"
+    fi
+fi
+
